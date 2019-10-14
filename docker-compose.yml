@@ -7,8 +7,12 @@ services:
       - /usr/src/app/node_modules
     ports:
       - '5000:5000'
+    depends_on:
+      - db
+    environment:
+      - NODE_ENV=development
 
-  frontend:
+  web:
     build: ./frontend/
     volumes:
       - ./frontend/:/app
@@ -17,3 +21,10 @@ services:
       - '3000:3000'
     environment:
       - NODE_ENV=development
+
+  db:
+    image: mongo
+    volumes:
+      - ./data:/data/db
+    ports:
+      - '27017:27017'
